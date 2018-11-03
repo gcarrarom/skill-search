@@ -1,0 +1,53 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "inputSubjects",
+      "databaseName": "skillsearch",
+      "collectionName": "Subjects",
+      "connectionStringSetting": "skillsearch-osharp_DOCUMENTDB",
+      "direction": "in"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "inputConsultants",
+      "databaseName": "skillsearch",
+      "collectionName": "Consultants",
+      "connectionStringSetting": "skillsearch-osharp_DOCUMENTDB",
+      "direction": "in"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "outputSubjects",
+      "databaseName": "skillsearch",
+      "collectionName": "Subjects",
+      "createIfNotExists": false,
+      "connectionStringSetting": "skillsearch-osharp_DOCUMENTDB",
+      "direction": "out"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "outputConsultants",
+      "databaseName": "skillsearch",
+      "collectionName": "Consultants",
+      "createIfNotExists": false,
+      "connectionStringSetting": "skillsearch-osharp_DOCUMENTDB",
+      "direction": "out"
+    }
+  ]
+}
