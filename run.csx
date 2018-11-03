@@ -227,11 +227,13 @@ public static async Task<IActionResult> Run(HttpRequest req,
              
             attachmentText = @"/skills help - Displays this message
 /skills list - Lists all the available Subjects/Skills 
-/skills get <SubjectName> - Shows the list of Consultants that might be able to help you out!
-/skills create <Subjectname> - creates a Subject
-/skills assign <SubjectName> <ConsultantSlackTag> - Assigns a consultant to a Subject
-/skills remove <SubjectName> <ConsultantSlackTag> - Removes a consultant from a Subject
-/skills me - Lists the subjects that you are assigned to;";
+/skills get <SubjectName> - Shows the list of Consultants that might be able to help you out;
+/skills <ConsultantSlackTag - Shows all the skills from a consultant;
+/skills create <Subjectname> - creates a Subject;
+/skills assign <SubjectName> <ConsultantSlackTag> - Assigns a consultant to a Subject;
+/skills remove <SubjectName> <ConsultantSlackTag> - Removes a consultant from a Subject;
+/skills me - Lists the subjects that you are assigned to;
+/skills dump - Lists all the subjects available;";
             payload.attachments.Add(new Attachment(attachmentText));
 
             break;
