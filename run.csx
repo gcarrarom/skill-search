@@ -447,6 +447,16 @@ public static async Task<IActionResult> Run(HttpRequest req,
 
             break;
         }
+        case "dump":{
+            log.LogInformation($"Dump request by {requestingUserID}");
+
+            string subjectList = string.Join("\n", dbsubjects.Select(x=> x.name));
+                        
+            payload.text = $"Here's the list of the subjects available in this tool:";
+            payload.attachments.Add(new Attachment(subjectList));
+
+            break;
+        }
         default:{
             log.LogInformation("Default switch...");
 
