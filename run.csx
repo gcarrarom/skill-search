@@ -214,10 +214,10 @@ public static async Task<IActionResult> Run(HttpRequest req,
     List<string> commands = new List<string>(text.Split(' '));
     log.LogInformation($"Split of the commands, here's the first verb:{commands[0]}");
 
-    string afterGetCommand = null;
+    string afterCommand = null;
 
     if(text.IndexOf(' ') != -1){
-        afterGetCommand = text.Substring(text.IndexOf(' ') + 1);
+        afterCommand = text.Substring(text.IndexOf(' ') + 1);
     }
 
     switch (commands[0]){
@@ -243,20 +243,20 @@ public static async Task<IActionResult> Run(HttpRequest req,
             Guid subjectID;
             Subject subject = null;
 
-            if(afterGetCommand==null){
+            if(afterCommand==null){
                 log.LogInformation("Nothing after the command...");
                 payload.text = $"Subject name cannot be empty!";
                 payload.attachments.Add(new Attachment("Use \"/skills list\" to list the subjects available"));
                 break;
             }
             
-            if(Guid.TryParse(afterGetCommand, out subjectID)){
-                subject = dbsubjects.Find(x => String.Equals(x.id,afterGetCommand, StringComparison.OrdinalIgnoreCase));
+            if(Guid.TryParse(afterCommand, out subjectID)){
+                subject = dbsubjects.Find(x => String.Equals(x.id,afterCommand, StringComparison.OrdinalIgnoreCase));
             }else{
-                subject = dbsubjects.Find(x => String.Equals(x.name,afterGetCommand, StringComparison.OrdinalIgnoreCase));
+                subject = dbsubjects.Find(x => String.Equals(x.name,afterCommand, StringComparison.OrdinalIgnoreCase));
             }
             if(subject == null){
-                payload.text = $"Subject {afterGetCommand} not found!";
+                payload.text = $"Subject {afterCommand} not found!";
                 payload.attachments.Add(new Attachment("Use \"/skills list\" to list the subjects available"));
                 break;
             }else if(subject.consultants_ids.Count() == 0){
@@ -301,22 +301,22 @@ public static async Task<IActionResult> Run(HttpRequest req,
         case "create":{
             log.LogInformation("User Ran a create Command");
 
-            if(afterGetCommand==null){
+            if(afterCommand==null){
                 payload.text = $"Subject name cannot be empty!";
                 payload.attachments.Add(new Attachment("Use \"/skills help\" to get some help on how to use the commands."));
                 break;
             }
 
-            log.LogInformation($"Checking if the group \"{afterGetCommand}\" already exists");
-            Subject subject = dbsubjects.Find(x => String.Equals(x.name,afterGetCommand, StringComparison.OrdinalIgnoreCase));
+            log.LogInformation($"Checking if the group \"{afterCommand}\" already exists");
+            Subject subject = dbsubjects.Find(x => String.Equals(x.name,afterCommand, StringComparison.OrdinalIgnoreCase));
             if(subject != null){
-                payload.text = $"The subject \"{afterGetCommand}\" already exists!";
+                payload.text = $"The subject \"{afterCommand}\" already exists!";
                 
             }
             else{
-                subject = new Subject(afterGetCommand);
+                subject = new Subject(afterCommand);
                 await outputSubjects.AddAsync(subject);
-                payload.text = $"Subject \"{afterGetCommand}\" created successfully!";
+                payload.text = $"Subject \"{afterCommand}\" created successfully!";
             }
 
             payload.attachments.Add(new Attachment("assign_button", "Would you like to assign youself as an expert for this subject?", subject.name, "Assign Myself", requestingUserID));
@@ -326,7 +326,7 @@ public static async Task<IActionResult> Run(HttpRequest req,
         case "assign":{
             log.LogInformation("Assign command running...");
 
-            if(afterGetCommand==null){
+            if(afterCommand==null){
                 payload.text = $"Subject name cannot be empty!";
                 payload.attachments.Add(new Attachment("Use \"/skills help\" to get some help on how to use the commands."));
                 break;
@@ -334,7 +334,7 @@ public static async Task<IActionResult> Run(HttpRequest req,
 
             string user = commands.LastOrDefault();
             string userID = user;
-            string subjectName = afterGetCommand.Substring(0, afterGetCommand.Count()-user.Count()).Trim();
+            string subjectName = afterCommand.Substring(0, afterCommand.Count()-user.Count()).Trim();
 
             if(user[0] == '<'){
                 userID = user.Split('|')[0].Substring(2);
@@ -376,7 +376,7 @@ public static async Task<IActionResult> Run(HttpRequest req,
             
             string user = commands.LastOrDefault();
             string userID = user;
-            string subjectName = afterGetCommand.Substring(0, afterGetCommand.Count()-user.Count()).Trim();
+            string subjectName = afterCommand.Substring(0, afterCommand.Count()-user.Count()).Trim();
 
             if(user[0] == '<'){
                 userID = user.Split('|')[0].Substring(2);
