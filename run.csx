@@ -467,6 +467,14 @@ public static async Task<IActionResult> Run(HttpRequest req,
 
             break;
         }
+        case "link":{
+            log.LogInformation("USer Requested a link");
+
+            payload.text = "Work in progress...";
+            payload.attachments.Add(new Attachment("Please come back whenever this feature is done :)"));
+
+            break;
+        }
         default:{
             log.LogInformation("Default switch...");
 
