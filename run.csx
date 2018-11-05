@@ -97,6 +97,7 @@ public class Action{
     public List<Option> options { get; set; }
     public List<Option> selected_options { get; set;}
     public string value { get; set; }
+    public Confirm confirm { get; set; }
     public Action(){
         this.type = "select";
         this.options = new List<Option>();
@@ -120,6 +121,13 @@ public class Action{
         this.name = buttonName;
         this.text = buttonText;
         this.value = buttonValue;
+    }
+    public Action (string buttonName, string buttonText, string buttonValue, string confirmTitle, string confirmText){
+        this.type = "button";
+        this.name = buttonName;
+        this.text = buttonText;
+        this.value = buttonValue;
+        this.confirm = new Confirm(confirmTitle, confirmText);
     }
 }
 
