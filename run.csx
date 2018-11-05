@@ -501,7 +501,10 @@ public static async Task<IActionResult> Run(HttpRequest req,
 
     log.LogInformation($"outputText: {outputText}");
 
-    string payloadJson = JsonConvert.SerializeObject(payload);
+    string payloadJson = JsonConvert.SerializeObject(payload, Newtonsoft.Json.Formatting.None, 
+                            new JsonSerializerSettings { 
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
     log.LogInformation($"payloadJSON: {payloadJson}");
     log.LogInformation($"{requestingUserID} ran this command: {text}");
 
